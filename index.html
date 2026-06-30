@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Femi Elusogbon — 40th Birthday Celebration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* === Custom Properties === */
+    :root {
+      --bg:         #0d0d0d;
+      --gold:       #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim:   #7a6030;
+      --cream:      #f5e6c8;
+      --white:      #ffffff;
+      --muted:      rgba(255,255,255,0.55);
+      --card-bg:    rgba(201,168,76,0.05);
+      --pad:        clamp(60px, 10vw, 120px);
+      --max:        880px;
+    }
+
+    /* === Reset === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    /* === Fade-in === */
+    .fi {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fi.show { opacity: 1; transform: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* === Divider === */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+    }
+    .divider-gem {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      fill: var(--gold);
+    }
+
+    /* === Hero === */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1.5rem 4rem;
+      overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+
+    .script {
+      display: block;
+      font-family: 'Great Vibes', cursive;
+      color: var(--gold);
+      line-height: 1.3;
+    }
+
+    .hero-script { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: 1rem; }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.2rem, 11vw, 7.5rem);
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.03em;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--muted);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 3.5rem;
+    }
+
+    .scroll-btn {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gold-dim);
+      font: 700 0.65rem/1 'Lato', sans-serif;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .scroll-btn:hover { color: var(--gold); transform: translateY(4px); }
+    .scroll-btn svg { animation: bob 2.2s ease infinite; }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(7px); }
+    }
+
+    /* === Section wrapper === */
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: var(--pad) 1.5rem;
+    }
+
+    /* === Section header === */
+    .s-head { text-align: center; margin-bottom: 3.5rem; }
+    .s-script { font-size: clamp(1.3rem, 3vw, 1.9rem); margin-bottom: 0.4rem; }
+    .s-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5vw, 3rem);
+      font-weight: 400;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+
+    /* === Details section === */
+    #details { background: linear-gradient(180deg, rgba(201,168,76,0.04) 0%, transparent 100%); }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 4.5rem;
+    }
+
+    .d-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.25rem;
+      border: 1px solid rgba(201,168,76,0.22);
+      background: var(--card-bg);
+      transition: border-color 0.3s ease;
+    }
+    .d-card:hover { border-color: rgba(201,168,76,0.6); }
+
+    .d-icon {
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .d-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .d-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--cream);
+      line-height: 1.45;
+    }
+
+    /* === Countdown === */
+    .cd-wrap {
+      text-align: center;
+    }
+    .cd-top {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      font-weight: 700;
+      margin-bottom: 1.6rem;
+    }
+    .cd-row {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: clamp(0.75rem, 3vw, 2.5rem);
+      flex-wrap: wrap;
+    }
+    .cd-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 64px;
+    }
+    .cd-digit {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .cd-unit {
+      font-size: 0.58rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin-top: 0.3rem;
+    }
+    .cd-sep {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 9vw, 5.5rem);
+      color: var(--gold-dim);
+      line-height: 1;
+    }
+    #cd-ended {
+      display: none;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.2rem;
+      color: var(--gold);
+    }
+
+    /* === RSVP section === */
+    #rsvp { background: linear-gradient(0deg, rgba(201,168,76,0.04) 0%, transparent 100%); }
+
+    .disclaimer {
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--gold);
+      color: var(--gold);
+      font-style: italic;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .rsvp-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .f-field { display: flex; flex-direction: column; gap: 0.55rem; }
+
+    .f-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .f-input {
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid var(--gold-dim);
+      color: var(--white);
+      font: 300 1rem/1 'Lato', sans-serif;
+      padding: 0.8rem 0;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .f-input::placeholder { color: var(--muted); }
+    .f-input:focus { border-bottom-color: var(--gold); }
+
+    /* Custom radio */
+    .radio-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+    .r-opt {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .r-opt:hover { color: var(--cream); }
+
+    .r-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+
+    .r-circle {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold-dim);
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      transition: border-color 0.25s;
+    }
+    .r-circle::after {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      transform: scale(0);
+      transition: transform 0.2s ease;
+    }
+    .r-opt input:checked ~ .r-circle { border-color: var(--gold); }
+    .r-opt input:checked ~ .r-circle::after { transform: scale(1); }
+    .r-opt:has(input:checked) { color: var(--cream); }
+
+    /* Spouse question (hidden by default) */
+    #spouse-field { display: none; }
+    #spouse-field.show-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      animation: fadeUp 0.4s ease;
+    }
+
+    /* Submit */
+    .btn-rsvp {
+      display: block;
+      width: 100%;
+      padding: 1.1rem 2rem;
+      background: linear-gradient(135deg, var(--gold-dim) 0%, var(--gold) 50%, var(--gold-light) 100%);
+      color: #0a0a0a;
+      font: 700 0.95rem/1 'Playfair Display', serif;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: opacity 0.3s, transform 0.2s;
+    }
+    .btn-rsvp:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-rsvp:active { transform: none; }
+
+    /* Success */
+    #success-msg {
+      display: none;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      animation: fadeUp 0.6s ease forwards;
+    }
+    .suc-star  { font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; }
+    .suc-title {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.2rem, 6vw, 3rem);
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .suc-body { color: var(--muted); max-width: 380px; margin: 0 auto; font-size: 0.95rem; }
+
+    /* === Footer === */
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem 4rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .ft-love {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .ft-copy {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* === Responsive === */
+    @media (max-width: 520px) {
+      .detail-grid { grid-template-columns: 1fr 1fr; }
+      .cd-sep { display: none; }
+    }
+
+    /* Space between sections */
+    .section-gap { padding: 2.5rem 0; }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-inner">
+    <span class="script hero-script">You are cordially invited to celebrate</span>
+    <h1 class="hero-name">Femi Elusogbon</h1>
+    <p class="hero-sub">40th Birthday Celebration</p>
+    <button class="scroll-btn" onclick="document.getElementById('details').scrollIntoView({behavior:'smooth'})">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
+           stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="5,9 11,15 17,9"/>
+      </svg>
+    </button>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="section-gap"></div>
+<div class="divider">
+  <svg class="divider-gem" viewBox="0 0 20 20"><polygon points="10,1 19,10 10,19 1,10"/></svg>
+</div>
+
+<!-- ══════════════ DETAILS ══════════════ -->
+<section id="details">
+  <div class="wrap">
+
+    <div class="s-head fi">
+      <span class="script s-script">The Details</span>
+      <h2 class="s-title">Join Us for a Night to Remember</h2>
+    </div>
+
+    <div class="detail-grid">
+      <div class="d-card fi">
+        <div class="d-icon">◈</div>
+        <div class="d-label">Date</div>
+        <div class="d-val">Saturday<br>August 8, 2026</div>
+      </div>
+      <div class="d-card fi">
+        <div class="d-icon">◈</div>
+        <div class="d-label">Time</div>
+        <div class="d-val">4:00 PM<br><span style="font-size:0.85rem;color:var(--muted)">Eastern Time</span></div>
+      </div>
+      <div class="d-card fi">
+        <div class="d-icon">◈</div>
+        <div class="d-label">Location</div>
+        <div class="d-val">89 Highman Ave<br>Cambridge, ON</div>
+      </div>
+      <div class="d-card fi">
+        <div class="d-icon">◈</div>
+        <div class="d-label">Dress Code</div>
+        <div class="d-val">All White</div>
+      </div>
+    </div>
+
+    <!-- Countdown -->
+    <div class="cd-wrap fi">
+      <p class="cd-top">Counting Down to the Celebration</p>
+      <div class="cd-row" id="cd-row">
+        <div class="cd-block">
+          <span class="cd-digit" id="cd-d">00</span>
+          <span class="cd-unit">Days</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block">
+          <span class="cd-digit" id="cd-h">00</span>
+          <span class="cd-unit">Hours</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block">
+          <span class="cd-digit" id="cd-m">00</span>
+          <span class="cd-unit">Minutes</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-block">
+          <span class="cd-digit" id="cd-s">00</span>
+          <span class="cd-unit">Seconds</span>
+        </div>
+      </div>
+      <p id="cd-ended">The celebration has begun!</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="divider">
+  <svg class="divider-gem" viewBox="0 0 20 20"><polygon points="10,1 19,10 10,19 1,10"/></svg>
+</div>
+
+<!-- ══════════════ RSVP ══════════════ -->
+<section id="rsvp">
+  <div class="wrap">
+
+    <div class="s-head fi">
+      <span class="script s-script">Kindly Reply</span>
+      <h2 class="s-title">RSVP by July 8, 2026</h2>
+    </div>
+
+    <div class="fi">
+      <p class="disclaimer">
+        Each invitation admits 2 guests only. Space is limited and we are
+        unable to accommodate additional guests beyond your invitation.
+      </p>
+    </div>
+
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none" title="form response"></iframe>
+
+    <form
+      id="rsvp-form"
+      class="rsvp-form fi"
+      method="POST"
+      action="https://docs.google.com/forms/d/e/1FAIpQLScfey6nLEuHfNBNT_Fsa8oE2E5icdFfLCP2EM1wdn7omU13NA/formResponse"
+      target="hidden_iframe"
+    >
+      <!-- Name -->
+      <div class="f-field">
+        <label class="f-label" for="f-name">Full Name</label>
+        <input
+          class="f-input"
+          type="text"
+          id="f-name"
+          name="entry.1798258104"
+          placeholder="Your full name"
+          required
+          autocomplete="name"
+        >
+      </div>
+
+      <!-- Attending -->
+      <div class="f-field">
+        <span class="f-label" id="attending-label">Will you be attending?</span>
+        <div class="radio-row" role="radiogroup" aria-labelledby="attending-label">
+          <label class="r-opt">
+            <input type="radio" id="attend-yes" name="entry.1563403301" value="Yes" required>
+            <span class="r-circle"></span>
+            Joyfully accepts
+          </label>
+          <label class="r-opt">
+            <input type="radio" id="attend-no" name="entry.1563403301" value="No">
+            <span class="r-circle"></span>
+            Regretfully declines
+          </label>
+        </div>
+      </div>
+
+      <!-- Spouse (hidden until "Yes" chosen) -->
+      <div class="f-field" id="spouse-field">
+        <span class="f-label" id="spouse-label">Will you be bringing your spouse / partner?</span>
+        <div class="radio-row" role="radiogroup" aria-labelledby="spouse-label">
+          <label class="r-opt">
+            <input type="radio" id="spouse-yes" name="entry.1275649962" value="Yes">
+            <span class="r-circle"></span>
+            Yes
+          </label>
+          <label class="r-opt">
+            <input type="radio" id="spouse-no" name="entry.1275649962" value="No">
+            <span class="r-circle"></span>
+            No
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-rsvp">Send My RSVP</button>
+    </form>
+
+    <!-- Success state -->
+    <div id="success-msg">
+      <div class="suc-star">✦</div>
+      <div class="suc-title">Thank you!</div>
+      <p class="suc-body">
+        Your RSVP has been received. We look forward to celebrating
+        with you on August 8th!
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <p class="ft-love">With love, The Elusogbon Family</p>
+  <p class="ft-copy">&copy; 2026 &nbsp;·&nbsp; Femi's 40th</p>
+</footer>
+
+<script>
+/* ── Particle canvas ── */
+(function () {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx    = canvas.getContext('2d');
+  const hero   = document.getElementById('hero');
+  let pts = [], raf, paused = false;
+
+  function resize() {
+    canvas.width  = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+    const count = Math.min(110, Math.floor(canvas.width * canvas.height / 7500));
+    pts = Array.from({ length: count }, () => ({
+      x:     Math.random() * canvas.width,
+      y:     Math.random() * canvas.height,
+      r:     0.7 + Math.random() * 1.8,
+      phase: Math.random() * Math.PI * 2,
+      spd:   0.00035 + Math.random() * 0.0006,
+    }));
+  }
+
+  function draw(ts) {
+    if (paused) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (const p of pts) {
+      const a = 0.1 + 0.32 * (0.5 + 0.5 * Math.sin(ts * p.spd + p.phase));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(201,168,76,${a.toFixed(3)})`;
+      ctx.fill();
+    }
+    raf = requestAnimationFrame(draw);
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    paused = document.hidden;
+    if (!paused) raf = requestAnimationFrame(draw);
+  });
+  window.addEventListener('resize', () => { resize(); });
+  resize();
+  raf = requestAnimationFrame(draw);
+})();
+
+/* ── Countdown ── */
+(function () {
+  const TARGET = new Date('2026-08-08T16:00:00');
+  const dEl = document.getElementById('cd-d');
+  const hEl = document.getElementById('cd-h');
+  const mEl = document.getElementById('cd-m');
+  const sEl = document.getElementById('cd-s');
+  const row = document.getElementById('cd-row');
+  const end = document.getElementById('cd-ended');
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function tick() {
+    const diff = TARGET - Date.now();
+    if (diff <= 0) {
+      row.style.display = 'none';
+      end.style.display = 'block';
+      return;
+    }
+    dEl.textContent = pad(Math.floor(diff / 86400000));
+    hEl.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+    mEl.textContent = pad(Math.floor((diff % 3600000) / 60000));
+    sEl.textContent = pad(Math.floor((diff % 60000) / 1000));
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ── Spouse question toggle ── */
+(function () {
+  const yesRadio    = document.getElementById('attend-yes');
+  const noRadio     = document.getElementById('attend-no');
+  const spouseField = document.getElementById('spouse-field');
+  const spouseInputs = spouseField.querySelectorAll('input');
+
+  function show() {
+    spouseField.classList.add('show-field');
+    spouseInputs.forEach(i => i.required = true);
+  }
+  function hide() {
+    spouseField.classList.remove('show-field');
+    spouseInputs.forEach(i => { i.required = false; i.checked = false; });
+  }
+
+  yesRadio.addEventListener('change', () => { if (yesRadio.checked) show(); });
+  noRadio.addEventListener('change',  () => { if (noRadio.checked)  hide(); });
+})();
+
+/* ── Form submit → success state ── */
+(function () {
+  const form    = document.getElementById('rsvp-form');
+  const iframe  = document.getElementById('hidden_iframe');
+  const success = document.getElementById('success-msg');
+  const disc    = document.querySelector('.disclaimer');
+
+  form.addEventListener('submit', () => { form.dataset.sent = '1'; });
+
+  iframe.addEventListener('load', () => {
+    if (form.dataset.sent === '1') {
+      form.style.display    = 'none';
+      if (disc) disc.style.display = 'none';
+      success.style.display = 'block';
+    }
+  });
+})();
+
+/* ── Intersection observer fade-ins ── */
+(function () {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('show'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+})();
+</script>
+
+</body>
+</html>
